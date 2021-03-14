@@ -64,7 +64,7 @@ func FromRaw(raw []interface{}) (o *Order, err error) {
 	}
 
 	if len(raw) < 26 {
-		return o, fmt.Errorf("data slice too short for order: %#v", raw)
+		return o, fmt.Errorf("bad order wire format: %#v", raw)
 	}
 
 	o = &Order{
@@ -101,7 +101,8 @@ func FromRaw(raw []interface{}) (o *Order, err error) {
 // service and tries to convert it into an Snapshot.
 func SnapshotFromRaw(raw []interface{}) (s *Snapshot, err error) {
 	if len(raw) == 0 {
-		return s, fmt.Errorf("data slice too short for order: %#v", raw)
+		return &Snapshot{}, nil
+		//	return s, fmt.Errorf("empty snapshot")
 	}
 
 	os := make([]*Order, 0)
